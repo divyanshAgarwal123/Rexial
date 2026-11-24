@@ -1,0 +1,66 @@
+{
+  "sourceCommit": "aa3af64ff4788fb1a756ad2e8e00a7cbee93f1ad",
+  "sourceParents": [
+    "63b51ddccf68a38519e5b69e5149467bbb9f2096"
+  ],
+  "sourceBlobs": {
+    "apps/genAI/README.md": "f9e15cccfef7582542fe2acc95c4a26f18f29a7b",
+    "apps/genAI/app/rag/rag_system.py": "d7b881b46615288657dc5c1b45eb62b97d26f85b",
+    "apps/genAI/tests/benchmark_pdf_cache.py": "0c8c9ab2b6c1a28d074f1f3dd4b9cdf8530a0ffb",
+    "apps/genAI/tests/conftest.py": "5b85f41ed6c70e1cf7223d86985838ceb4128589",
+    "apps/genAI/tests/test_pdf_cache.py": "f7fe1fca7f42015cc8accf594e3d931ef33fe5b6"
+  },
+  "artifactSha256": {
+    ".nsoc-evidence/pdf-cache-244/rexial244-final-ruff.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    ".nsoc-evidence/pdf-cache-244/rexial244-benchmark.json": "e2bd954b7b9c70675580e7fca46076232edf18cd0abe3e2205aaef0c7d97724b",
+    ".nsoc-evidence/pdf-cache-244/rexial244-final-tests.log": "317a5119454afd9ac980c9605af8df9fe774e9bddec30e904dcb3dd605887746",
+    ".nsoc-evidence/pdf-cache-244/rexial244-gitleaks.log": "96cad9999c980d8b39f2d3ed0d71581036fe372462ea3b2210cd33906be67cef"
+  },
+  "environment": {
+    "fastembed": "0.9.1",
+    "onnxruntime": "1.32.0",
+    "langchain-core": "1.8.4",
+    "langchain-text-splitters": "1.2.0",
+    "pypdf": "7.1.1",
+    "pytest": "9.2.0",
+    "ruff": "0.17.6"
+  },
+  "validation": {
+    "Python": "3.11.15",
+    "baselineTests": 31,
+    "fullServiceTests": 43,
+    "newTests": 12,
+    "ruffAppAndNewTests": "passed",
+    "compileallApp": "passed",
+    "stagedSecrets": "no leaks",
+    "benchmark": {
+      "model": "BAAI/bge-small-en-v1.5",
+      "python": "3.11.15",
+      "machine": "arm64",
+      "pdfBytes": 20144,
+      "pdfSha256": "8f1805a44f6eb0c788b81c42aa986adfc30f16e77c0d898c03e3e0e71da6768d",
+      "scope": "Real CPU PDF parsing/chunking/embedding/store; excludes LLM, model load and warmup.",
+      "before": {
+        "milliseconds": [
+          476.282,
+          519.792
+        ],
+        "documentEmbeddingCalls": 2
+      },
+      "chunks": 30,
+      "after": {
+        "milliseconds": [
+          553.986,
+          3.756
+        ],
+        "documentEmbeddingCalls": 1
+      }
+    }
+  },
+  "limitations": [
+    "Real CPU PDF-to-store benchmark excludes model initialization/warmup, query embedding and LLM latency. Not a whole-endpoint or production SLA.",
+    "In-process cache holds PDF text/vectors until LRU eviction or restart; no TTL/disk/shared cache. Limits cover retained entries, not model or in-flight/request memory.",
+    "Monorepo pnpm checks and full Docker Compose startup were not run locally for this Python-only change; those template boxes remain unchecked.",
+    "External CI, review, merge and official credit remain unconfirmed at publication."
+  ]
+}
